@@ -74,13 +74,17 @@
          marquee img { display: block; }
         </style>
         <script>
+         function logIn(personalAccessToken) {
+             localStorage.setItem('hawlinks-personal-access-token', personalAccessToken);
+         }
+
          function switchTab(button) {
-             document.querySelectorAll('nav button').forEach(tab => {
+             for (const tab of document.getElementsByTagName('nav')[0].getElementsByTagName('button')) {
                  tab.setAttribute('aria-selected', tab === button);
-             });
-             document.querySelectorAll('section').forEach(section => {
+             }
+             for (const section of document.getElementsByTagName('section')) {
                  section.hidden = section.id !== button.textContent;
-             });
+             }
          }
 
          function promptForLink(event) {
