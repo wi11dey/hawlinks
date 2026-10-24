@@ -74,6 +74,15 @@
          marquee img { display: block; }
         </style>
         <script>
+         function switchTab(button) {
+             document.querySelectorAll('nav button').forEach(tab => {
+                 tab.setAttribute('aria-selected', tab === button);
+             });
+             document.querySelectorAll('section').forEach(section => {
+                 section.hidden = section.id !== button.textContent;
+             });
+         }
+
          function promptForLink(event) {
              const image = (event.dataTransfer || event.clipboardData).files[0];
              if (!image || !image.type.startsWith('image/')) {
@@ -110,7 +119,7 @@
                  anchor.append(img);
                  horizontal.append(anchor);
                  vertical.append(horizontal);
-                 document.body.append(vertical);
+                 document.querySelector('section:not([hidden])').append(vertical);
              };
              reader.readAsDataURL(image);
          }
@@ -149,5 +158,6 @@
             </marquee>
             <!-- haii hawlie add more stuff you want in here just like the a above -->
         </section>
+        <section id="nails" hidden></section>
     </body>
 </html>
