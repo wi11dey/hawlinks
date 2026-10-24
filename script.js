@@ -54,11 +54,42 @@ function logIn(personalAccessToken) {
     localStorage.setItem('hawlinks-personal-access-token', personalAccessToken);
 }
 
-function commitToGithub() {
+async function commitToGithub() {
     const token = localStorage.getItem('hawlinks-personal-access-token');
     if (!token) {
         alert('Please log in to GitHub to save edits by going to the Inspect Element and running logIn("<GitHub personal accessToken>")');
+        return;
     }
 
-    // TODO use the github api to update index.html with the new document.documentElement.outerHTML
+    const url = 'https://api.github.com/repos/wi11dey/hawlinks/contents/index.html';
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+    };
+
+    try {
+        const response = await fetch(url, { headers });
+        const file = await response.json();
+        if (!response.ok) {
+            throw new Error(file.message);
+        }
+
+        const html = new TextEncoder().encode('<!doctype html>\n' + document.documentElement.outerHTML);
+        const result = await fetch(url, {
+            method: 'PUT',
+            headers,
+            body: JSON.stringify({
+                message: 'Update index.html',
+                content: btoa(Array.from(html, byte => String.fromCharCode(byte)).join('')),
+                sha: file.sha
+            })
+        });
+        if (!result.ok) {
+            throw new Error((await result.json()).message);
+        }
+        console.log("Comitted to GitHub.");
+    } catch (error) {
+        alert('Could not save edits to GitHub: ' + error.message);
+    }
 }
