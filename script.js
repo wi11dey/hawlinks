@@ -80,7 +80,7 @@ async function commitToGithub() {
             method: 'PUT',
             headers,
             body: JSON.stringify({
-                message: 'Update index.html',
+                message: `Update ${document.querySelector('section:not([hidden])').id} in index.html`,
                 content: btoa(Array.from(html, byte => String.fromCharCode(byte)).join('')),
                 sha: file.sha
             })
