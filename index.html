@@ -39,9 +39,29 @@
          function addImageAndLink(image, link) {
              const reader = new FileReader();
              reader.onload = () => {
-                 console.log(reader.result);
-                 console.log(link);
-             }
+                 const vertical = document.createElement('marquee');
+                 vertical.direction = Math.random() < 0.5 ? 'up' : 'down';
+                 vertical.behavior = 'alternate';
+                 vertical.scrollAmount = 1 + Math.floor(Math.random() * 6);
+
+                 const horizontal = document.createElement('marquee');
+                 horizontal.direction = Math.random() < 0.5 ? 'left' : 'right';
+                 horizontal.behavior = 'alternate';
+                 horizontal.scrollAmount = 1 + Math.floor(Math.random() * 6);
+
+                 const anchor = document.createElement('a');
+                 anchor.href = link;
+                 anchor.target = '_blank';
+
+                 const img = document.createElement('img');
+                 img.src = reader.result;
+                 img.width = 200;
+
+                 anchor.append(img);
+                 horizontal.append(anchor);
+                 vertical.append(horizontal);
+                 document.body.append(vertical);
+             };
              reader.readAsDataURL(image);
          }
         </script>
