@@ -23,26 +23,35 @@
 
         </style>
         <script>
-         document.ondragover = event => event.preventDefault();
-         document.ondrop = document.onpaste = event => {
-             const files = [...(event.dataTransfer || event.clipboardData).files].filter(file => file.type.startsWith('image/'));
-             if (!files.length) return;
-             event.preventDefault();
-             for (const file of files) {
-                 const href = prompt('Link?', 'https://');
-                 if (!href) continue;
-                 const reader = new FileReader();
-                 reader.onload = () => {
-                     const picture = { src: reader.result, href };
-                     try { localStorage.setItem('hawlinks-pictures-v1', JSON.stringify(pictures)); }
-                     catch { alert('Browser storage is full or unavailable; this picture will disappear on reload.'); }
-                 };
-                 reader.readAsDataURL(file);
+         function promptForLink(event) {
+             const image = (event.dataTransfer || event.clipboardData).files[0];
+             if (!image.type.startsWith('image/')) {
+                 return;
              }
-         };
+             const dialog = document.getElementsByTag('dialog')[0];
+             dialog.image = image;
+             dialog.showModal();
+         }
+
+         function addImageAndLink(image, link) {
+             const reader = new FileReader();
+             reader.onload = () => {
+                 console.log(reader.result);
+                 console.log(link);
+             }
+         }
         </script>
     </head>
-    <body>
+    <body ondragover="event.preventDefault()" ondrop="promptForLink(event)" onpaste="promptForLink(event)">
+        <dialog onclose="">
+            <form method="dialog" onsubmit="event.preventDefault(); addImageAndLink(this.closest('dialog').image, this.elements.link.value)">
+                <label>
+                    Link? <input name="link" autofocus>
+                </label>
+                <button>Add</button>
+            </form>
+        </dialog>
+
         <marquee direction="down" behavior="alternate" scrollamount="3">
             <marquee direction="right" behavior="alternate" scrollamount="5">
                 <a href="https://www.mamainastitch.com/beatrice-chicken-crochet-pattern/" target="_blank">
