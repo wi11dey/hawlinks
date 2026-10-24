@@ -67,7 +67,7 @@
         </script>
     </head>
     <body ondragover="event.preventDefault()" ondrop="promptForLink(event)" onpaste="promptForLink(event)">
-        <dialog onclose="">
+        <dialog>
             <form method="dialog" onsubmit="addImageAndLink(this.closest('dialog').image, this.elements.link.value)">
                 <label>
                     Link? <input name="link" autofocus>
