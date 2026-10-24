@@ -21,14 +21,17 @@
 
          img { display: block; }
 
+         marquee a { display: inline-block; }
         </style>
         <script>
          function promptForLink(event) {
              const image = (event.dataTransfer || event.clipboardData).files[0];
-             if (!image.type.startsWith('image/')) {
+             if (!image || !image.type.startsWith('image/')) {
                  return;
              }
-             const dialog = document.getElementsByTag('dialog')[0];
+
+             event.preventDefault();
+             const dialog = document.getElementsByTagName('dialog')[0];
              dialog.image = image;
              dialog.showModal();
          }
@@ -39,12 +42,13 @@
                  console.log(reader.result);
                  console.log(link);
              }
+             reader.readAsDataURL(image);
          }
         </script>
     </head>
     <body ondragover="event.preventDefault()" ondrop="promptForLink(event)" onpaste="promptForLink(event)">
         <dialog onclose="">
-            <form method="dialog" onsubmit="event.preventDefault(); addImageAndLink(this.closest('dialog').image, this.elements.link.value)">
+            <form method="dialog" onsubmit="addImageAndLink(this.closest('dialog').image, this.elements.link.value)">
                 <label>
                     Link? <input name="link" autofocus>
                 </label>
