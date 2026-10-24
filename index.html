@@ -21,8 +21,29 @@
          }
 
          nav {
-             height: 10vh;
+             display: flex;
+             align-items: end;
+             gap: 4px;
+             border-bottom: 1px solid #bbb;
+             box-sizing: border-box;
          }
+
+         nav button {
+             margin-bottom: -1px;
+             padding: 8px 16px;
+             background: #eee;
+             border: 2px solid black;
+             cursor: pointer;
+         }
+
+         nav button[aria-selected="true"] {
+             background: white;
+             border-bottom-color: white;
+         }
+
+         /* nav {
+            height: 10vh;
+            } */
 
          section {
              position: relative;
@@ -90,7 +111,7 @@
     </head>
     <body ondragover="event.preventDefault()" ondrop="promptForLink(event)" onpaste="promptForLink(event)">
         <nav>
-            <button onclick="switchTab(this)">patterns</button>
+            <button aria-selected="true" onclick="switchTab(this)">patterns</button>
             <button onclick="switchTab(this)">nails</button>
         </nav>
 
