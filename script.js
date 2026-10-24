@@ -40,10 +40,12 @@ function addImageAndLink(image, link) {
         img.src = reader.result;
         img.width = 200;
 
-        anchor.append(img);
-        horizontal.append(anchor);
-        vertical.append(horizontal);
-        document.querySelector('section:not([hidden])').append(vertical);
+        anchor.append('\n                        ', img, '\n                    ');
+        horizontal.append('\n                    ', anchor, '\n                ');
+        vertical.append('\n                ', horizontal, '\n            ');
+
+        const section = document.querySelector('section:not([hidden])');
+        section.append('\n            ', vertical, '\n        ');
 
         commitToGithub();
     };
