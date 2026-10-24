@@ -4,12 +4,33 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>hawlinks</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700" rel="stylesheet">
         <style>
          html, body {
              height: 100%;
+             font-family: "Pixelify Sans", sans-serif;
+             font-optical-sizing: auto;
+             font-style: normal;
+             margin: 0;
          }
 
-         body > marquee {
+         button, input, select, textarea {
+             font: inherit;
+         }
+
+         nav {
+             height: 10vh;
+         }
+
+         section {
+             position: relative;
+             height: 90vh;
+             overflow: hidden;
+         }
+
+         section > marquee {
              position: absolute;
              inset: 0;
              width: 100%;
@@ -17,11 +38,12 @@
              pointer-events: none;
          }
 
-         marquee a, marquee img { pointer-events: auto; }
+         marquee a {
+             display: inline-block;
+             pointer-events: auto;
+         }
 
-         img { display: block; }
-
-         marquee a { display: inline-block; }
+         marquee img { display: block; }
         </style>
         <script>
          function promptForLink(event) {
@@ -67,6 +89,11 @@
         </script>
     </head>
     <body ondragover="event.preventDefault()" ondrop="promptForLink(event)" onpaste="promptForLink(event)">
+        <nav>
+            <button onclick="switchTab(this)">patterns</button>
+            <button onclick="switchTab(this)">nails</button>
+        </nav>
+
         <dialog>
             <form method="dialog" onsubmit="addImageAndLink(this.closest('dialog').image, this.elements.link.value)">
                 <label>
@@ -76,22 +103,23 @@
             </form>
         </dialog>
 
-        <marquee direction="down" behavior="alternate" scrollamount="3">
-            <marquee direction="right" behavior="alternate" scrollamount="5">
-                <a href="https://www.mamainastitch.com/beatrice-chicken-crochet-pattern/" target="_blank">
-                    <img src="Chunky-Chicken-Crochet-Pattern-1-scaled.jpg" width="200"/>
-                </a>
+        <section id="patterns">
+            <marquee direction="down" behavior="alternate" scrollamount="3">
+                <marquee direction="right" behavior="alternate" scrollamount="5">
+                    <a href="https://www.mamainastitch.com/beatrice-chicken-crochet-pattern/" target="_blank">
+                        <img src="Chunky-Chicken-Crochet-Pattern-1-scaled.jpg" width="200"/>
+                    </a>
+                </marquee>
             </marquee>
-        </marquee>
 
-        <marquee direction="up" behavior="alternate" scrollamount="5">
-            <marquee direction="left" behavior="alternate" scrollamount="3">
-                <a href="https://www.mariskavos.nl/free-puffin-crochet-pattern/" target="_blank">
-                    <img src="images.jpeg" width="200">
-                </a>
+            <marquee direction="up" behavior="alternate" scrollamount="5">
+                <marquee direction="left" behavior="alternate" scrollamount="3">
+                    <a href="https://www.mariskavos.nl/free-puffin-crochet-pattern/" target="_blank">
+                        <img src="images.jpeg" width="200">
+                    </a>
+                </marquee>
             </marquee>
-        </marquee>
-
-        <!-- haii hawlie add more stuff you want in here just like the a above -->
+            <!-- haii hawlie add more stuff you want in here just like the a above -->
+        </section>
     </body>
 </html>
