@@ -10,11 +10,6 @@
         <script src="./script.js"></script>
     </head>
     <body ondragover="event.preventDefault()" ondrop="promptForLink(event)" onpaste="promptForLink(event)">
-        <nav>
-            <button aria-selected="true" onclick="switchTab(this)">patterns</button>
-            <button onclick="switchTab(this)">nails</button>
-        </nav>
-
         <dialog>
             <form method="dialog" onsubmit="addImageAndLink(this.closest('dialog').image, this.elements.link.value)">
                 <label>
@@ -23,6 +18,12 @@
                 <button>Add</button>
             </form>
         </dialog>
+
+        <nav>
+            <button aria-selected="true" onclick="switchTab(this)">patterns</button>
+            <button onclick="switchTab(this)">nails</button>
+            <button onclick="switchTab(this)">clothes</button>
+        </nav>
 
         <section id="patterns">
             <marquee direction="down" behavior="alternate" scrollamount="3">
@@ -43,5 +44,6 @@
             <!-- haii hawlie add more stuff you want in here just like the a above -->
         </section>
         <section id="nails" hidden></section>
+        <section id="clothes" hidden></section>
     </body>
 </html>
